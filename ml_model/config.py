@@ -1,0 +1,2 @@
+RANDOM_FOREST_MODEL_PATH = 'rf_model.pth'
+NEURAL_NETWORK_MODEL_PATH = 'nn_model.pth'

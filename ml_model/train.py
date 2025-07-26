@@ -3,7 +3,10 @@ from ml_model.model import RandomForestModel
 from ml_model.data_loader import load_data_from_sql
 from ml_model.utils import split_data
 
-def train(model, db_path = 'db.sqlite'):
+def train_model(model, params=None, db_path = 'db.sqlite'):
+    if params is None:
+        params = {}
+
     # Load data from SQL database
     data = load_data_from_sql(db_path)
     
@@ -14,8 +17,8 @@ def train(model, db_path = 'db.sqlite'):
     X_train, X_test, y_train, y_test = split_data(X, y)
 
     # Initialize and train the Random Forest model
-    model = model(n_estimators=100, random_state=42)
-    model.train(X_train, y_train)
+    model = model(**params)
+    model.train_model(X_train, y_train)
 
     # Make predictions on the test set
     y_pred = model.predict(X_test)
@@ -32,5 +35,6 @@ def train(model, db_path = 'db.sqlite'):
 
 
 if __name__ == "__main__":
-    model = train(RandomForestModel)
+    model = train_model(RandomForestModel, {'n_estimators': 100, 'random_state': 42})
+
 
